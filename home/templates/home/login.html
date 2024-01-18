@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% comment %}
+    Context Variables:
+    context = {
+        "form": form,
+    }
+{% endcomment %}
+{% block title %}Login Page{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body card-bg jello animated p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-flex">
+                                <div class="flex-grow-1 bg-login-image" style="background-image: url({%static "img/image.jpg"%});
+                                 background-repeat: no-repeat; background-size: cover;"></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h4 class=" mb-4">Welcome Back!</h4>
+                                    </div>
+                                    <form class="user" method="post" action="{{request.get_full_path}}">
+                                        {% csrf_token %}
+                                        {# {{ form.as_p }}#}
+                                        {% if 'cook_user' and 'cook_pass' in request.COOKIES %}
+                                            <div class="form-group">
+                                                <input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username/Email..." value="{{request.COOKIES.cook_user}}" required>
+                                                <input id="login_username_hidden" name="username" type="hidden">
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" value="{{request.COOKIES.cook_pass}}" required>
+                                                <input id="login_password_hidden" name="password" type="hidden">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1" name="remember_me" value="remember_me" checked="checked">
+                                                        <label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="form-group">
+                                                <input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username/Email..."  required>
+                                                <input id="login_username_hidden" name="username" type="hidden">
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" required>
+                                                <input id="login_password_hidden" name="password" type="hidden">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    <div class="form-check">
+                                                        <span class="float-left">
+                                                            <input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1" name="remember_me" value="remember_me">
+                                                            <label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label>
+                                                        </span>
+                                                        <span class="float-right">
+                                                            <input id="id_show_password_checkbox" class="form-check-input custom-control-input" type="checkbox" value="show_password">
+                                                            <label id="id_show_password_label" class="form-check-label custom-control-label" for="id_show_password_checkbox">Show Password</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        <button class="btn btn-primary btn-block text-white btn-user" type="submit" onclick="submit_login();">Login</button>
+                                        <hr>
+                                        <a class="btn btn-danger btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'google-oauth2' %}"><i class="fa fa-google-plus fa-fw" ></i>&nbsp; Login with Google</a>
+                                        <a class="btn btn-info btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook fa-fw" ></i>&nbsp; Login with Facebook</a>
+                                        <a class="btn btn-dark btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'github' %}"><i class="fa fa-github fa-fw"></i>&nbsp; Register with Github</a>
+                                        <hr>
+                                    </form>
+                                    <div class="text-center"><a class="small" href="{% url 'password_reset' %}">Forgot Password?</a></div>
+                                    <div class="text-center"><a class="small" href="{% url "signup" %}">Create an Account!</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        let passwordInputElement = $("#exampleInputPassword");
+        let showPasswordCheckbox = $("#id_show_password_checkbox");
+
+        showPasswordCheckbox.change(function () {
+            let type = passwordInputElement.attr("type");
+            if(this.checked) {
+                passwordInputElement.attr("type", "text");
+            } else {
+                passwordInputElement.attr("type", "password");
+            }
+         });
+    </script>
+{% endblock %}

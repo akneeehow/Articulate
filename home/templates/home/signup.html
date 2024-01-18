@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% comment %}
+    Context Variables:
+    context = {
+        "form": form,
+    }
+{% endcomment %}
+
+
+{% block title %}Sign-up Page{% endblock %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="card shadow-lg o-hidden border-0 my-5">
+            <div class="card-body card-bg jello animated p-0">
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-flex">
+                        <div class="flex-grow-1 bg-register-image" style="background-image: url({%static 'img/image.jpg'%});
+                         background-repeat: no-repeat; background-size: cover;"></div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center" style="">
+                                <h4 class="mb-4">Create an Account!</h4>
+                            </div>
+                            <form class="user" method="post" action="{% url 'signup' %}">
+                                {% csrf_token %}
+{#                                {{ form.as_p }}#}
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="First Name" name="first_name" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control form-control-user" type="text" id="exampleLastName" placeholder="Last Name" name="last_name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control form-control-user" type="text" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Username" name="username" required>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email Address" name="email" required>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input class="form-control form-control-user" type="password" id="id_password1_un_hashed" placeholder="Password" required>
+                                        <input type="hidden" name="password" id="id_password1_hidden">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control form-control-user" type="password" id="id_password2_un_hashed" placeholder="Repeat Password" required>
+                                        <input type="hidden" name="password_repeat" id="id_password2_hidden">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary btn-block text-white btn-user" type="submit" onclick="submit_signup();">Register Account</button>
+                                <hr>
+                                <a class="btn btn-danger btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'google-oauth2' %}"><i class="fa fa-google-plus fa-fw"></i>&nbsp; Register with Google</a>
+                                <a class="btn btn-info btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook fa-fw"></i>&nbsp; Register with Facebook</a>
+                                <a class="btn btn-dark btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'github' %}"><i class="fa fa-github fa-fw"></i>&nbsp; Register with Github</a>
+                                <hr>
+                            </form>
+                            <div class="text-center"><a class="small" href="{% url 'login' %}">Already have an account? Login!</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
