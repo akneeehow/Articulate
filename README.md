@@ -13,3 +13,14 @@
 * On another terminal, run `peerjs --port 8001` to start peerjs server.
 * Now you are good to go, visit `http://localhost:8000`.
 
+* How to run on windows
+* cd C:\path\to\project
+* python -m venv articvenv
+* articvenv\Scripts\activate
+* pip install -r requirements.txt
+* npm install peer -g
+* Run `python manage.py makemigrations`.
+* Run `python manage.py migrate`.
+* Run `python manage.py runserver` to start the server.
+* On another terminal, run `peerjs --port 8001` to start peerjs server.
+* Now you are good to go, visit `http://localhost:8000`.
