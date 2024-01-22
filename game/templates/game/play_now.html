@@ -18,7 +18,7 @@
             <hr data-aos="flip-left" class="star-dark">
         </div>
     </header>
-    <div class="container-fluid" style="padding-bottom:50px;">
+    <div class="container-fluid" style="padding-bottom:100px; margin-left: auto; margin-right: auto;">
         <div class="row">
             <div class="col mt-4">
                 <div class="card leaderboard">
@@ -26,7 +26,7 @@
                     <svg class="ico-cup">
                     <use xlink:href="#cup"></use>
                     </svg>
-                    Leader Board
+                    Leaderboard
                 </h1>
                 <ol>
                     {% for top_player in top_players %}
@@ -42,36 +42,22 @@
             </div>
             <div class="col mt-4">
                 <div class="card">
-                    <div data-aos="flip-left" class="text-center card-header card-bg">
-                        <h5 class="text-uppercase"> public online multi-player</h5>
-                    </div>
-                    <div class="card-body text-center card-hd">
-                        <p>Play with random Players across the world.<br>
-                        League can only be increased playing <strong>GLOBAL</strong> matches.
-                        </p>
-                        <a class="btn btn-lg btn-primary" href="{% url 'play_now' %}">Start Game</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col mt-4">
-                <div class="card">
-                    <div data-aos="flip-left" class="text-center card-bg card-header">
-                        <h5 class="text-uppercase">custom multi-player</h5>
+                    <div data-aos="flip-left" class="text-center text-uppercase card-bg card-header">
+                        <h5 class="text-uppercase">Custom Games</h5>
                     </div>
                     <div class="card-body text-center card-hd">
                         <p>Challenge and Play with your friends online<br>
-                        League cannot be increased playing <strong>CUSTOM</strong> matches.
                         </p>
                         <form method="post" action="{% url 'play_now' %}">
                             {% csrf_token %}
                             <div class="form-group">
-                                <input type="text" name="friend_unique_id" placeholder="Room-id" class="col form-control form-control-user">
+                                <input type="text" name="friend_unique_id" placeholder="Room-id" class="col form-control form-control-user text-uppercase">
                                 &nbsp;
-                                <button class="btn btn-md btn-primary col" type="submit">Join Room</button>
+                                <button class="btn btn-md btn-primary col text-uppercase" type="submit">Join Room</button>
                             </div>
                         </form>
                         <button class="btn btn-sm disabled">OR</button><br/>
-                        <a class="btn btn-warning" href="{% url 'play_now' %}">Create New Room</a>
+                        <a class="btn btn-warning" href="{% url 'create_room' %}">Create New Room</a>
                     </div>
                 </div>
             </div>

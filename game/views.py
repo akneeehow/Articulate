@@ -4,13 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.conf import settings
-from .models import GameRoom, Player, id_generator
-
+from .models import GameRoom
 from user_profile.models import UserProfile
-
 from channels.layers import get_channel_layer
-import json
+from django.http import JsonResponse
 from asgiref.sync import async_to_sync
+import re
+from django.views.decorators.csrf import csrf_exempt
 
 ERROR = "error"
 SUCCESS = "success"
@@ -48,41 +48,18 @@ def play_now(request):
     }
     return render(request, 'game/play_now.html', context=context)
 
+def CreateRoomView(request):
+    return render(request,'game/create_room.html')
 
+def GameView(request,room_name):
+    if not re.match(r'^[\w-]*$', room_name):
+        return render(request,'game/play_now.html')
+    return render(request,'game/game.html')
 
-
-
-def proceed_to_game(request, game_type, unique_id):
-    """
-    View to show game room tutorial.
-    :param request:
-    :param game_type:
-    :param unique_id:
-    :return:
-    """
-    context = {
-        "game_type": game_type,
-        "unique_id": unique_id,
-    }
-    return render(request, 'game/info.html', context)
-
-
-@login_required
-def enter_game_room(request, game_type, unique_id):
-    player = request.user
-    player_profile = UserProfile.objects.get(user=player)
+@csrf_exempt
+def roomExist(request,room_name):
+    print(room_name)
     
-    if not player_profile.is_email_verified:
-        messages.info(request, "Your email is not verified.")
-        return HttpResponseRedirect(reverse('user_profile', kwargs={"username": player.username}))
-    
-    if not player.is_authenticated:
-        error_message = "Login / Signup to enter a Game Room."
-        return render(request, '404.html', {"message": error_message})
-    
-    context = {
-        'unique_id': unique_id,
-        'peer_js_host_name': settings.PEER_JS_HOST_NAME,
-        'peer_js_port_number': settings.PEER_JS_PORT_NUMBER,
-    }
-    return render(request, 'game/enter_game_room.html', context)
+    return JsonResponse({
+        "room_exist":GameRoom.objects.filter(room_name=room_name).exists()
+    })

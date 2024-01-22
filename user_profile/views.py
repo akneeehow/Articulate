@@ -25,7 +25,6 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
-from game.models import GameHistory, Participant
 from .models import UserProfile
 
 from .forms import AvatarUploadForm
@@ -74,13 +73,11 @@ def user_profile_view(request, username):
         "xp_threshold": int(xp_threshold),
     }
 
-    history = get_history(username=username)
     context = {
         "visited_user": visited_user,
         "visited_profile": visited_profile,
         "avatar_upload_form": avatar_upload_form,
     }
-    context.update(history)
     context.update(stats)
 
     return render(request, 'user_profile/profile_new.html', context=context)
@@ -231,40 +228,6 @@ def avatar_upload(request, username):
         message = None
         return render(request, '404.html', {"message": message})
 
-
-def get_history(username):
-    """
-    Function to fetch history of game.
-    :param username:
-    :return:
-    """
-    user = User.objects.get(username=username)
-    participant_qs = Participant.objects.filter(user=user)
-    response = {}
-    if participant_qs:
-        all_games = []
-        for participant in participant_qs:
-            game_room = participant.game_room
-            all_games.append(game_room)
-
-        all_games.reverse()
-
-        all_game_data = []
-        for game in all_games:
-            winner_username = game.winner_username
-            winner = User.objects.get(username=winner_username)
-            player_qs = Participant.objects.filter(game_room=game)
-            data = {
-                "game": game,
-                "participants": player_qs,
-                "winner": winner,
-            }
-            all_game_data.append(data)
-
-        response = {
-            "all_game_data": all_game_data,
-        }
-    return response
 
 
 @login_required
