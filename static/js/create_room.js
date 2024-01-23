@@ -41,6 +41,7 @@ function getInRoom() {
 create_room.addEventListener('click',async function(){
     try {
         const check_url = 'http://127.0.0.1:8000/'
+
         const res = await fetch(`${check_url}room/check_room/${room_name.value}/`,{
             method:'GET',
         
@@ -62,6 +63,7 @@ join_room_btn.addEventListener('click',getInRoom)
 //for developent
 const home_urls = "ws://127.0.0.1:8000/ws/online-rooms/" ;
 const onlinerooms = document.getElementById('onlinerooms')
+
 const socket = new ReconnectingWebSocket(home_urls);
 
 
