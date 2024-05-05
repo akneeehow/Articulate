@@ -53,11 +53,6 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-primary btn-block text-white btn-user" type="submit" onclick="submit_signup();">Register Account</button>
-                                <hr>
-                                <a class="btn btn-danger btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'google-oauth2' %}"><i class="fa fa-google-plus fa-fw"></i>&nbsp; Register with Google</a>
-                                <a class="btn btn-info btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook fa-fw"></i>&nbsp; Register with Facebook</a>
-                                <a class="btn btn-dark btn-block text-white btn-user" role="button" href="{% url 'social:begin' 'github' %}"><i class="fa fa-github fa-fw"></i>&nbsp; Register with Github</a>
-                                <hr>
                             </form>
                             <div class="text-center"><a class="small" href="{% url 'login' %}">Already have an account? Login!</a></div>
                         </div>

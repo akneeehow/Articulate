@@ -45,32 +45,13 @@ def user_profile_view(request, username):
     visited_profile = UserProfile.objects.get(user=visited_user)
     avatar_upload_form = AvatarUploadForm()
 
-    current_league = visited_profile.current_league
-    current_rating = visited_profile.current_rating
-    current_league_progress = 100 * (current_rating / UserProfile.RATING_THRESHOLDS[current_league])
-    public_games_played = visited_profile.total_public_games_count
-    public_games_won = visited_profile.won_public_games_count
+
+
     custom_games_played = visited_profile.total_custom_games_count
-    custom_games_won = visited_profile.won_custom_games_count
-    total_games_played = public_games_played + custom_games_played
-    total_games_won = public_games_won + custom_games_won
 
-    overall_win_rate = 100 * (total_games_won / total_games_played) if total_games_played > 0 else -1
-    public_win_rate = 100 * (public_games_won / public_games_played) if public_games_played > 0 else -1
-    custom_win_rate = 100 * (custom_games_won / custom_games_played) if custom_games_played > 0 else -1
+    STATS = {
+        "games_played": int(custom_games_played),
 
-    xp = visited_profile.xp
-    level, xp_threshold = visited_profile.get_current_level_and_xp_threshold()
-    xp_progress = 100 * (xp / xp_threshold)
-    print(xp, level, xp_progress)
-    stats = {
-        "current_league_progress": int(current_league_progress),
-        "overall_win_rate": int(overall_win_rate),
-        "public_win_rate": int(public_win_rate),
-        "custom_win_rate": int(custom_win_rate),
-        "level": int(level),
-        "xp_progress": int(xp_progress),
-        "xp_threshold": int(xp_threshold),
     }
 
     context = {
@@ -78,7 +59,7 @@ def user_profile_view(request, username):
         "visited_profile": visited_profile,
         "avatar_upload_form": avatar_upload_form,
     }
-    context.update(stats)
+    context.update(STATS)
 
     return render(request, 'user_profile/profile_new.html', context=context)
 

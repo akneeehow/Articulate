@@ -1,19 +1,27 @@
 from django.conf.urls import url
-from django.urls import path
+from django.urls import path,re_path
+
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator, OriginValidator
 
-from game.consumers import GameRoomConsumer
+from game.consumers import GameConsumer, OnlineRoomConsumer
+from django.urls import path
 
+websocket_urlpatterns=[
+    path('ws/clicked/<room_name>/',GameConsumer.as_asgi(),name="clicked"),
+    path('ws/online-rooms/',OnlineRoomConsumer.as_asgi())
+
+]
 
 application = ProtocolTypeRouter({
-    # Empty for now (http->django views is added by default)
+
     'websocket': AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter(
+                websocket_urlpatterns
                 [ 
-                    path("game/enter_room/<str:game_type>/<str:unique_id>/", GameRoomConsumer),
+                    path('game/create_room/',OnlineRoomConsumer.as_asgi())
                 ]
             )
         )

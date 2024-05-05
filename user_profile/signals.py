@@ -14,7 +14,3 @@ def create_profile(sender, instance, created, **kwargs):
         else:
             # If user signed - up using social login
             UserProfile.objects.create(user=instance, is_email_verified=True)
-
-# @receiver(post_save, sender=User)
-# def save_profile(sender, instance, **kwargs):
-#     instance.userprofile.save()  # i.e. instance(which is user here).modelname.save()

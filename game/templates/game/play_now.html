@@ -21,42 +21,15 @@
     <div class="container-fluid" style="padding-bottom:100px; margin-left: auto; margin-right: auto;">
         <div class="row">
             <div class="col mt-4">
-                <div class="card leaderboard">
-                <h1 class="text-center text-uppercase">
-                    <svg class="ico-cup">
-                    <use xlink:href="#cup"></use>
-                    </svg>
-                    Leaderboard
-                </h1>
-                <ol>
-                    {% for top_player in top_players %}
-                        <a href="{% url 'user_profile' top_player.user.username %}">
-                            <li>
-                                <mark>{{ top_player.user.username }}</mark>
-                                <small>{{ top_player.current_rating }}&nbsp;({{ top_player.current_league }})</small>
-                            </li>
-                        </a>
-                    {% endfor %}
-                </ol>
-                </div>
             </div>
             <div class="col mt-4">
                 <div class="card">
                     <div data-aos="flip-left" class="text-center text-uppercase card-bg card-header">
-                        <h5 class="text-uppercase">Custom Games</h5>
+                        <h5 class="text-uppercase">Start Game</h5>
                     </div>
                     <div class="card-body text-center card-hd">
-                        <p>Challenge and Play with your friends online<br>
+                        <p>Challenge your friends and family<br>
                         </p>
-                        <form method="post" action="{% url 'play_now' %}">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <input type="text" name="friend_unique_id" placeholder="Room-id" class="col form-control form-control-user text-uppercase">
-                                &nbsp;
-                                <button class="btn btn-md btn-primary col text-uppercase" type="submit">Join Room</button>
-                            </div>
-                        </form>
-                        <button class="btn btn-sm disabled">OR</button><br/>
                         <a class="btn btn-warning" href="{% url 'create_room' %}">Create New Room</a>
                     </div>
                 </div>

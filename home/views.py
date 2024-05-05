@@ -111,11 +111,6 @@ def login_view(request):
                     response.set_cookie('cook_pass', password, max_age=86400, path='/')
                 return response
         else:
-            # print(type(request))
-            # print(request.path)
-            # print(request.get_full_path)
-            # print(request.get_full_path())
-            # print(request.get_full_path_info())
             messages.error(request, "Invalid Credentials")
             return redirect(request.get_full_path())
     else:

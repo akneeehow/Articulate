@@ -17,24 +17,33 @@
     <link rel="stylesheet" href="{% static 'css/bingo.css' %}">
   </head>
   <body>
-    {% block content %} {% endblock content %}
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js" integrity="sha512-B4skI5FiLurS86aioJx9VfozI1wjqrn6aTdJH+YQUmCZum/ZibPBTX55k5d9XM6EsKePDInkLVrN7vPmJxc1qA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   {% block script %}{% endblock script %}
-  </body>
+    <div class="container">
+        <div class="setup-area">
+            <h2>Game Setup</h2>
+            <input type="text" id="team1-name" placeholder="Team 1 Name">
+            <input type="text" id="team2-name" placeholder="Team 2 Name">
+            <button id="start-game">Start Game</button>
+        </div>
+        <div class="game-area" style="display: none;">
+            <div id="category-selection">
+                <label for="categories">Choose a category:</label>
+                <select id="categories">
+                </select>
+            </div>
+            <div class="team-area">
+                <div class="team-score" id="team1-score-area">
+                    <span class="team-name" id="team1-name-display"></span>: <span id="team1-score">0</span>
+                </div>
+                <div class="team-score" id="team2-score-area">
+                    <span class="team-name" id="team2-name-display"></span>: <span id="team2-score">0</span>
+                </div>
+            </div>
+            <button id="next-turn">Next Turn</button>
+        </div>
+        <div class="results-area" style="display: none;">
+            <h2>Game Over!</h2>
+            <p id="winner-announcement"></p>
+        </div>
+    </div>
+</body>
 </html>

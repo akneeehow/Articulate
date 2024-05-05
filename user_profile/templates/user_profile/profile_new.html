@@ -6,14 +6,9 @@
         "visited_profile": visited_profile,
         "avatar_upload_form": avatar_upload_form,
         "all_game_data": all_game_data,
-        "current_league_progress": int(current_league_progress),
         "overall_win_rate": int(overall_win_rate),
         "public_win_rate": int(public_win_rate),
         "custom_win_rate": int(custom_win_rate),
-        "level": level,
-        "xp": xp,
-        "xp_progress": xp_progress,
-        "xp_threshold": xp_threshold,
     }
 {% endcomment %}
 {% block styles %}
@@ -55,49 +50,11 @@
                             </form>
                         {% endif %}
 
-                        <h4 class="small text-left font-weight-bold">Current XP ({{ visited_profile.xp }})<span class="float-right">Level {{ level }} ({{ xp_threshold }})</span></h4>
-                        <div class="progress progress-sm mb-3">
-                            <div class="progress-bar bg-success" aria-valuenow="{{ xp_progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ xp_progress }}%;"><span class="sr-only">{{ xp_progress }}%</span></div>
-                        </div>
+                        <h4 class="small text-left font-weight-bold">Games Played : {{ visited_profile.total_custom_games_count }}</h4>
                     </div>
                 </div>
 
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="text-primary font-weight-bold m-0">Win Rates</h6>
-                    </div>
-                    <div class="card-body card-bg">
-                    {% if public_win_rate != -1 or custom_win_rate != -1 %}
-                         {% if overall_win_rate != -1 %}
-                            <h4 class="small font-weight-bold">Overall<span class="float-right">{{ overall_win_rate }}%</span></h4>
-                            <div class="progress progress-sm mb-3">
-                                <div class="progress-bar bg-primary" aria-valuenow="{{ overall_win_rate }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ overall_win_rate }}%;"><span class="sr-only">{{ overall_win_rate }}%</span></div>
-                            </div>
-                        {% endif %}
 
-                        {% if public_win_rate != -1 %}
-                            <h4 class="small font-weight-bold">Public Multi-player<span class="float-right">{{ public_win_rate }}%</span></h4>
-                            <div class="progress progress-sm mb-3">
-                                <div class="progress-bar bg-info" aria-valuenow="{{ public_win_rate }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ public_win_rate }}%;"><span class="sr-only">{{ public_win_rate }}%</span></div>
-                            </div>
-                        {% endif %}
-
-                        {% if custom_win_rate != -1 %}
-                            <h4 class="small font-weight-bold">Custom Multi-player<span class="float-right">{{ custom_win_rate }}%</span></h4>
-                            <div class="progress progress-sm mb-3">
-                                <div class="progress-bar bg-info" aria-valuenow="{{ custom_win_rate }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ custom_win_rate }}%;"><span class="sr-only">{{ custom_win_rate }}%</span></div>
-                            </div>
-                        {% endif %}
-                    {% else %}
-                        {% if visited_user.username == user.username %}
-                            <p>You haven't played any public match yet.</p>
-                            <p><a href="{% url 'play_now' %}">Click to Play Now</a></p>
-                        {% else %}
-                            <p>{{ visited_user.username }} hasn't played any public match yet.</p>
-                        {% endif %}
-                    {% endif %}
-                    </div>
-                </div>
             </div>
 
             <div class="col-lg-8"> {# 4 #}
@@ -158,72 +115,6 @@
                     </div>
                 </div>
 
-                <div class="col">
-                    <div class="card shadow mb-3">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 font-weight-bold">Game Stats</p>
-                        </div>
-
-                        <div class="card-body tbl-bg">
-                            <div class="table-responsive text-center">
-                                <table class="table table-borderless text-uppercase tbl-bg">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">
-                                                <img src="{% static "img/profile/league.png" %}" alt="" width="60px"><br>
-                                                <strong>CURRENT LEAGUE</strong>
-                                            </th>
-                                            <th scope="col">
-                                                <img src="{% static "img/profile/trophy.png" %}" alt="" width="60px"><br>
-                                                <strong>CURRENT RATING</strong>
-                                            </th>
-                                            <th scope="col">
-                                                <img src="{% static "img/profile/max-trophy.png" %}" alt="" width="60px"><br>
-                                                <strong>MAXIMUM RATING</strong>
-                                            </th>
-                                            <th scope="col">
-                                                <img src="{% static "img/profile/win.png" %}" alt="" width="80px"><br>
-                                                <strong>NO OF WINS</strong>
-                                            </th>
-                                            <th scope="col">
-                                                <img src="{% static "img/profile/played.png" %}" alt="" width="60px"><br>
-                                                <strong>NO OF MATCHES PLAYED</strong>
-                                            </th>
-                                            <th scope="col">
-                                                <img src="{% static "img/profile/win_streak.png" %}" alt="" width="60px"><br>
-                                                <strong>WINNING STREAK</strong>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                {{ visited_profile.current_league }}
-                                            </td>
-                                            <td>
-                                                {{ visited_profile.current_rating }}
-                                            </td>
-                                            <td>
-                                                {{ visited_profile.maximum_rating }}
-                                            </td>
-                                            <td>
-                                                {{ visited_profile.won_public_games_count|add:visited_profile.won_custom_games_count }}
-                                            </td>
-                                            <td>
-                                                {{ visited_profile.total_custom_games_count|add:visited_profile.total_public_games_count }}
-                                            </td>
-                                            <td>
-                                                {{ visited_profile.winning_streak }}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
 
                 <div class="col">
                     <div class="card shadow mb-3">
@@ -282,7 +173,7 @@
                                 {% else %}
                                     {% if visited_user.username == user.username %}
                                         <p>You haven't played any public match yet.</p>
-                                        <p><a href="{% url 'play_now' %}">Click to Play Now</a></p>
+                                        <p><a href="{% url 'create_room' %}">Click to Play Now</a></p>
                                     {% else %}
                                         <p>{{ visited_user.username }} hasn't played any public match yet.</p>
                                     {% endif %}

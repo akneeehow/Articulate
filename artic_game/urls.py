@@ -15,6 +15,8 @@ urlpatterns = [
     path('password_reset/done/', views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<str:uidb64>/<str:token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('', include('game.urls')),
+
 ]
 
 
